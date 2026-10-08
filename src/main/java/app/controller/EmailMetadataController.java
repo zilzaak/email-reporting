@@ -1,56 +1,47 @@
 package app.controller;
 
 import app.dto.ApiDTO;
-import app.dto.EmailMetadataDTO;
-import app.service.EmailMetadataFetchService;
-import app.service.EmailMetadataPersistToDBService;
+import app.service.EmailMetadataService;
+import app.service.MetadataDBOperationService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.io.IOException;
-import java.security.GeneralSecurityException;
 import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.List;
 
 @RestController
-@RequestMapping("/api/email-metadata")
+@RequestMapping("/email-metadata")
 @RequiredArgsConstructor
 @Tag(name ="email sla reporting")
 public class EmailMetadataController {
 
-    private final EmailMetadataFetchService fetchService;
-    private final EmailMetadataPersistToDBService emailMetadataPersistToDBService;
+    private final EmailMetadataService fetchService;
+    private final MetadataDBOperationService dbOperationService;
 
-    @GetMapping("/sender")
-    @Operation(description = "fetch the senders information on a specific date")
-    public ResponseEntity<ApiDTO> senderInfo(
-            @RequestParam String mailbox,
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<EmailMetadataDTO> list = fetchService.fetchMetadataForMailboxAndDate(mailbox, date);
-        return ResponseEntity.ok(ApiDTO.builder()
-                .status(true)
-                .message("Fetched " + list.size() + " metadata records successfully")
-                .totalItems(list.size())
-                .data(list)
-                .build());
+    @GetMapping("/list")
+    @Operation(description = "fetch mail metadata list")
+    public ResponseEntity<ApiDTO> threadList(
+            @RequestParam(required = false) String employeeOrMailBox,
+            @RequestParam(required = false)  LocalDate fromDate,
+            @RequestParam(required = false)  LocalDate toDate,
+            @RequestParam(defaultValue = "1")  Integer pageNumber,
+            @RequestParam(defaultValue = "10")  Integer pageSize
+            ) {
+        ApiDTO response = fetchService.getMailMetaDataList(employeeOrMailBox,fromDate,toDate,pageNumber,pageSize);
+        return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/update")
-    @Operation(description = "fetch the senders information on a specific date")
-    public ResponseEntity<ApiDTO> updateReplyInfo(@RequestParam String mailbox, @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date) {
-        List<EmailMetadataDTO> list = fetchService.fetchMetadataForMailboxAndDate(mailbox, date);
-        return ResponseEntity.ok(ApiDTO.builder()
-                .status(true)
-                .message("Fetched " + list.size() + " metadata records successfully")
-                .totalItems(list.size())
-                .data(list)
-                .build());
-    }
+    @PutMapping("/update-countability")
+    @Operation(description = "update countability")
+    public ResponseEntity<ApiDTO> updateCountability(
+            @RequestParam String bulkIds,
+            @RequestParam Boolean isCountable
+    ) {
+        ApiDTO response = dbOperationService.updateCountability(bulkIds,isCountable);
+        return ResponseEntity.ok(response);
+      }
 
 
 }

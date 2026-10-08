@@ -1,4 +1,4 @@
-package app.service;
+package app.config;
 
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.json.gson.GsonFactory;
@@ -115,6 +115,7 @@ public class GmailFactory {
                         GsonFactory.getDefaultInstance(),
                         new HttpCredentialsAdapter(creds))
                         .setApplicationName(APP_NAME)
+                        .setSuppressPatternChecks(true)
                         .build();
             } catch (Exception e) {
                 throw new RuntimeException("Reports init failed for " + mb, e);

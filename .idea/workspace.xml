@@ -5,7 +5,42 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031545d2-d2ed-49b0-a121-8f527fe3e723" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cronJobs/EmailsReplierInfoFetcherCronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/cronJobs/EmailsReplierInfoFetcherCronJob.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/config/ReportingSetupTypeConverter.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/ApprovedMailBoxDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/MetadataSearchResultProjection.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/NotRepliedReciversDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/entity/EmailSubject.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/enums/ReportingSetupType.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/util/CommonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/GmailConfig.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cronJobs/EmailMetadataFetcherCronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailMetadataFetchJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/cronJobs/EmailsReplierInfoFetcherCronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailsReplySyncJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/ApiDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/ApiDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/EmailMetadataDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/EmailMetadataDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/RootSenderDto.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/entity/EmailMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/entity/EmailMetadata.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/EmailMetadataRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/EmailMetadataRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataFetchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataPersistToDBService.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/GmailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/config/GmailFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/EmailSlaReportingApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/EmailSlaReportingApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/config/GmailConfig.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/config/SwaggerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/config/SwaggerConfig.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/controller/EmailMetadataController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/controller/EmailMetadataController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/cronJobs/EmailsReplierInfoFetcherCronJob.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO$ApiDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO$ApiDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/EmailMetadataDTO$EmailMetadataDTOBuilder.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/EmailMetadataDTO.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/RootSenderDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/entity/EmailMetadata.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/entity/EmailMetadata.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/repository/EmailMetadataRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/repository/EmailMetadataRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/service/EmailMetadataFetchService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/service/EmailMetadataPersistToDBService.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/service/GmailFactory.class" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -15,10 +50,10 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Enum" />
         <option value="Interface" />
         <option value="package-info" />
         <option value="Class" />
+        <option value="Enum" />
       </list>
     </option>
   </component>
@@ -31,12 +66,12 @@
     &quot;assignee&quot;: &quot;zilzaak&quot;
   }
 }</component>
-  <component name="GithubPullRequestsUISettings"><![CDATA[{
-  "selectedUrlAndAccountId": {
-    "url": "https://github.com/zilzaak/email-sla-reporting.git",
-    "accountId": "332eeb9f-3f16-4472-8b78-47e67fa8b540"
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/zilzaak/email-reporting.git&quot;,
+    &quot;accountId&quot;: &quot;332eeb9f-3f16-4472-8b78-47e67fa8b540&quot;
   }
-}]]></component>
+}</component>
   <component name="MavenImportPreferences">
     <option name="generalSettings">
       <MavenGeneralSettings>
@@ -72,9 +107,9 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.EmailSlaReportingApplication.executor": "Run",
+    "Spring Boot.EmailSlaReportingApplication.executor": "Debug",
     "Spring Boot.HisabPotroApplication.executor": "Run",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "master",
     "ignore.virus.scanning.warn.message": "true",
     "kotlin-language-version-configured": "true",
     "last_opened_file_path": "D:/Projects/email-sla-reporting/src/main/resources",
@@ -100,6 +135,10 @@
       <recent name="D:\personal\doinik-bazar-hisab\src\main\resources\static" />
       <recent name="D:\personal\doinik-bazar-hisab\src\main\resources" />
       <recent name="D:\personal\doinik-bazar-hisab\src\main\resources\templates\static\css\afsdg" />
+    </key>
+    <key name="CopyClassDialog.RECENTS_KEY">
+      <recent name="app.repository" />
+      <recent name="app.service" />
     </key>
   </component>
   <component name="RunManager" selected="Spring Boot.EmailSlaReportingApplication">
@@ -226,6 +265,11 @@
       <workItem from="1790749097045" duration="7019000" />
       <workItem from="1790996270789" duration="24362000" />
       <workItem from="1791025534517" duration="423000" />
+      <workItem from="1791080579521" duration="16771000" />
+      <workItem from="1791168831193" duration="18565000" />
+      <workItem from="1791254200837" duration="13804000" />
+      <workItem from="1791339254203" duration="17124000" />
+      <workItem from="1791427948853" duration="15654000" />
     </task>
     <servers />
   </component>
@@ -287,23 +331,138 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java</url>
-          <line>33</line>
+          <line>31</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataPersistToDBService.java</url>
-          <line>145</line>
-          <option name="timeStamp" value="84" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataPersistToDBService.java</url>
-          <line>97</line>
-          <option name="timeStamp" value="89" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataPersistToDBService.java</url>
-          <line>194</line>
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>203</line>
           <option name="timeStamp" value="91" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>160</line>
+          <option name="timeStamp" value="92" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>167</line>
+          <option name="timeStamp" value="93" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/controller/EmailReportingSetupController.java</url>
+          <line>26</line>
+          <option name="timeStamp" value="94" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>27</line>
+          <option name="timeStamp" value="95" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>40</line>
+          <option name="timeStamp" value="96" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>25</line>
+          <option name="timeStamp" value="97" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/entity/EmployeeInfo.java</url>
+          <line>9</line>
+          <option name="timeStamp" value="103" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>47</line>
+          <option name="timeStamp" value="104" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>58</line>
+          <option name="timeStamp" value="105" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>104</line>
+          <option name="timeStamp" value="106" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>59</line>
+          <option name="timeStamp" value="107" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="108" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>151</line>
+          <option name="timeStamp" value="109" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>154</line>
+          <option name="timeStamp" value="110" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/controller/EmailReportingSetupController.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="111" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>66</line>
+          <option name="timeStamp" value="112" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>62</line>
+          <option name="timeStamp" value="113" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>189</line>
+          <option name="timeStamp" value="114" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>139</line>
+          <option name="timeStamp" value="115" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>168</line>
+          <option name="timeStamp" value="116" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="117" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
+          <line>43</line>
+          <option name="timeStamp" value="118" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
+          <line>44</line>
+          <option name="timeStamp" value="119" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>74</line>
+          <option name="timeStamp" value="122" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
+          <line>146</line>
+          <option name="timeStamp" value="123" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

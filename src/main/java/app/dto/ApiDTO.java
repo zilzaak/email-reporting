@@ -5,7 +5,7 @@ import lombok.Data;
 @Data
 @Builder
 public class ApiDTO {
-    private Integer totalItems;
+    private long totalItems;
     private boolean status;
     private String message;
     private Integer totalPages;

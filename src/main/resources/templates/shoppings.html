@@ -1,0 +1,544 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping History</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+<!--    <link rel="stylesheet" th:href="@{tailwind.css}">-->
+    <!--    <link rel="stylesheet" th:href="@{/webjars/tailwindcss/tailwind.min.css}">-->
+    <script type="text/javascript">
+
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent any default form submission
+                document.querySelector('button[type="submit"]').click();
+            }
+        });
+
+
+        function setOnChangeInfo(){
+            document.getElementById("pageNumber").value=1;
+            document.getElementById("pageSize").value=100;
+        }
+
+        function calcInput(param) {
+            var opstr=document.getElementById("calcDisplay").value;
+            var result=document.getElementById("resultDisplay").value;
+
+            if(opstr===undefined){
+                document.getElementById("calcDisplay").value="";
+                opstr="";
+            }
+            if(result===undefined){
+                document.getElementById("resultDisplay").value="";
+                result="";
+            }
+
+            if(opstr.toString()===""){
+                if(param.toString()==="/" || param.toString()==="+" || param.toString()==="-" || param.toString()==="*"){
+                    return;
+                }else{
+                    document.getElementById('calcDisplay').value=param.toString();
+                }
+            }else{
+                if(param.toString()==="/" || param.toString()==="+" || param.toString()==="-" || param.toString()==="*"){
+                    if(opstr.toString().slice(-1)==="+" || opstr.toString().slice(-1)==="-" ||
+                        opstr.toString().slice(-1)==="/" || opstr.toString().slice(-1)==="*"){
+                        return;
+                    }else{
+                        document.getElementById('calcDisplay').value=opstr+ param.toString();
+                    }
+                }
+                else{
+                    if(opstr.toString().slice(-1)==="+" || opstr.toString().slice(-1)==="-" ||
+                        opstr.toString().slice(-1)==="/" || opstr.toString().slice(-1)==="*"){
+
+                        var lastChar=opstr.toString().slice(-1);
+                        var numb = opstr.slice(0, -1);
+                        if(result===""){
+                            if(lastChar==="+"){
+                                result=Number(numb.toString())+Number(param.toString());
+                            }
+                            if(lastChar==="-"){
+                                result=Number(numb.toString())-Number(param.toString());
+                            }
+                            if(lastChar==="*"){
+                                result=Number(numb.toString())*Number(param.toString());
+                            }
+                            if(lastChar==="/"){
+                                result=Number(numb.toString())/Number(param.toString());
+                            }
+                            document.getElementById('calcDisplay').value=opstr+param.toString();
+                            document.getElementById("resultDisplay").value=result;
+                        }else{
+                            if(lastChar==="+"){
+                                result=Number(result.toString())+Number(param.toString());
+                            }
+                            if(lastChar==="-"){
+                                result=Number(result.toString())-Number(param.toString());
+                            }
+                            if(lastChar==="*"){
+                                result=Number(result.toString())*Number(param.toString());
+                            }
+                            if(lastChar==="/"){
+                                result=Number(result.toString())/Number(param.toString());
+                            }
+                            document.getElementById('calcDisplay').value=opstr+param.toString();
+                            document.getElementById("resultDisplay").value=result;
+
+                        }
+
+                    }else{
+                        if(result===""){
+                            opstr=opstr.toString()+param.toString();
+                            document.getElementById("calcDisplay").value=opstr;
+                        }else{
+                            var numbers = opstr.toString().match(/\d+/g);  // Matches all number sequences
+                            var lastNumber = numbers[numbers.length - 1];
+                            var operators = opstr.toString().match(/[+\-*/]/g);  // Match all operators
+                            var lastOperator = operators[operators.length - 1];
+                            opstr=opstr.toString()+param.toString();
+                            var updatedLastNumber=Number(lastNumber.toString()+param.toString());
+
+
+                            if(lastOperator.toString()==='+'){
+                                result=Number(result.toString())-Number(lastNumber.toString());
+                                result=Number(result.toString())+updatedLastNumber;
+
+                            }
+                            if(lastOperator.toString()==='-'){
+                                result=Number(result.toString())+Number(lastNumber.toString());
+                                result=Number(result.toString())-updatedLastNumber;
+                            }
+                            if(lastOperator.toString()==='*'){
+                                result=Number(result.toString())/Number(lastNumber.toString());
+                                result=Number(result.toString())*updatedLastNumber;
+                            }
+                            if(lastOperator.toString()==='/'){
+                                result=Number(result.toString())*Number(lastNumber.toString());
+                                result=Number(result.toString())/updatedLastNumber;
+                            }
+                            document.getElementById("resultDisplay").value=result;
+                            document.getElementById("calcDisplay").value=opstr;
+                        }
+
+
+                    }
+
+                }
+            }
+        }
+
+
+        function calcClear() {
+            document.getElementById("calcDisplay").value="";
+            document.getElementById("resultDisplay").value="";
+        }
+
+        function calcEquals(){
+            var result = document.getElementById("resultDisplay").value;
+            document.getElementById("calcDisplay").value=result.toString();
+            document.getElementById("resultDisplay").value="";
+        }
+
+    </script>
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<div class="flex flex-wrap -mx-2 py-4 px-3 " style="width:70%;">
+    <div class="w-1/2 lg:w-1/5 px-2">
+        <a th:href="@{/}"  class="px-4 py-2 text-sm font-medium rounded-md " >
+            Home Page
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/5 px-2">
+        <a th:href="@{/list}"  class="px-4 py-2 text-sm font-medium rounded-md " >
+            Refresh
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/5 px-2">
+        <a th:href="@{/download/excel(
+        fromDate=${sform.fromDate},
+        toDate=${sform.toDate},
+        itemName=${sform.itemName},
+        itemCat=${sform.itemCat}
+    )}"
+           class="px-4 py-2 text-sm font-medium rounded-md">
+            Download excel..
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/5 px-2 text:left">
+        <a th:href="@{/download/pdf(
+        fromDate=${sform.fromDate},
+        toDate=${sform.toDate},
+        itemName=${sform.itemName},
+        itemCat=${sform.itemCat}
+    )}"
+           class="px-4 py-2 text-sm font-medium rounded-md">
+            Download Pdf..
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/5 px-2 text:left">
+            <button type="button" onclick="document.getElementById('calcModal').showModal()"
+                    class="mx-4 px-4 py-1 border border-gray-300 rounded-lg">
+                Calculator
+            </button>
+    </div>
+
+
+</div>
+
+<div class="flex flex-col sm:flex-row justify-between">
+
+    <form th:object="${sform}"
+          th:action="@{/list}"
+          method="get"
+          class="w-full">
+
+        <div class="mb-3 p-2 bg-gray-50 rounded-lg">
+
+
+            <!-- =================================================
+                 FIRST ROW - SEARCH FILTERS
+                 ================================================= -->
+
+            <div class="flex flex-wrap items-center gap-4">
+
+
+                <!-- FROM DATE -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-3">
+                        From :
+                    </span>
+
+                    <input id="fromDate" onchange="setOnChangeInfo()"
+                           type="date"
+                           th:field="*{fromDate}"
+                           class="px-4 py-1 border border-gray-300
+                                  rounded-lg focus:ring-2
+                                  focus:ring-blue-500
+                                  focus:border-blue-500
+                                  outline-none transition">
+
+                </div>
+
+
+                <!-- TO DATE -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-3">
+                        To Date :
+                    </span>
+
+                    <input id="toDate" onchange="setOnChangeInfo()"
+                           type="date"
+                           th:field="*{toDate}"
+                           class="px-4 py-1 border border-gray-300
+                                  rounded-lg focus:ring-2
+                                  focus:ring-blue-500
+                                  focus:border-blue-500
+                                  outline-none transition">
+
+                </div>
+
+
+                <!-- ITEM NAME -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-3">
+                        Item Name :
+                    </span>
+
+                    <input id="itemName" onkeyup="setOnChangeInfo()"
+                           type="text"
+                           th:field="*{itemName}"
+                           class="px-4 py-1 border border-gray-300
+                                  rounded-lg focus:ring-2
+                                  focus:ring-blue-500
+                                  focus:border-blue-500
+                                  outline-none transition">
+
+                </div>
+
+
+                <!-- CATEGORY -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-3">
+                        Category :
+                    </span>
+
+                    <select id="itemCat" onchange="setOnChangeInfo()"
+                            th:field="*{itemCat}"
+                            class="px-3 py-1 border border-gray-300
+                                   rounded-lg">
+
+                        <option value="">--</option>
+
+                        <option value="cosmetics">
+                            cosmetics
+                        </option>
+
+                        <option value="costume">
+                            costume
+                        </option>
+
+                        <option value="vegetable">
+                            vegetable
+                        </option>
+
+                        <option value="oil/masala">
+                            oil/masala
+                        </option>
+
+                        <option value="fish/meat">
+                            fish/meat
+                        </option>
+
+                        <option value="fruits">
+                            fruits
+                        </option>
+
+                        <option value="transport">
+                            transport
+                        </option>
+
+                        <option value="rent/monthly-fee">
+                            rent/monthly-fee
+                        </option>
+
+                        <option value="others">
+                            others
+                        </option>
+
+                    </select>
+
+                </div>
+
+            </div>
+
+
+            <!-- =================================================
+                 SECOND ROW - PAGINATION
+                 ================================================= -->
+
+            <div class="flex flex-wrap items-center gap-4 mt-3">
+
+
+                <!-- PAGE NUMBER -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-2">
+                        Page Number :
+                    </span>
+
+                    <input id="pageNumber"
+                           type="number"
+                           th:field="*{pageNumber}"
+                           min="1"
+                           class="w-24 px-2 py-1
+                                  border border-gray-300
+                                  rounded-lg focus:ring-2
+                                  focus:ring-blue-500
+                                  focus:border-blue-500
+                                  outline-none transition">
+
+                </div>
+
+
+                <!-- PAGE SIZE -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-2">
+                        Page Size :
+                    </span>
+
+                    <input id="pageSize"
+                           type="number"
+                           th:field="*{pageSize}"
+                           min="1"
+                           class="w-24 px-2 py-1
+                                  border border-gray-300
+                                  rounded-lg focus:ring-2
+                                  focus:ring-blue-500
+                                  focus:border-blue-500
+                                  outline-none transition">
+
+                </div>
+
+
+                <!-- TOTAL PAGES -->
+
+                <div class="flex items-center">
+
+                    <span class="text-gray-700 font-medium mr-2">
+                        Total Pages :
+                    </span>
+
+                    <input id="totalPages"
+                           type="number"
+                           readonly
+                           th:field="*{totalPages}"
+                           class="w-24 px-2 py-1
+                                  border border-gray-300
+                                  rounded-lg bg-gray-100">
+
+                </div>
+
+
+                <!-- SEARCH -->
+
+                <div class="flex items-center">
+
+                    <button id="search"
+                            type="submit"
+                            class="px-4 py-1
+                                   bg-green-500
+                                   text-white
+                                   font-medium
+                                   rounded-lg
+                                   hover:bg-green-600
+                                   transition-colors duration-200">
+
+                        Search
+
+                    </button>
+
+                </div>
+
+
+            </div>
+
+        </div>
+
+    </form>
+
+</div>
+
+
+<div class="container mx-auto px-4 py-3">
+    <div class="text-center mb-10">
+        <div class="bg-gray-50 px-6 py-4 border-t border-gray-200">
+      <b>Total Items</b>: <span class="font-medium" th:text="${sform.totalItems}"></span> <br/>
+      <b>Total Price:</b>:  <span class="font-medium text-green-600" th:text="${sform.totalPrice} "></span>
+        </div>
+    </div>
+
+
+    <div class="bg-white rounded-xl shadow-md overflow-hidden">
+        <div class="overflow-x-auto">
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-100">
+                <tr>
+                    <th class="px-6 py-3 text-left text-xs font-medium
+                    text-gray-700 uppercase tracking-wider">
+                        SL
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700
+                    uppercase tracking-wider">
+                        Date
+                    </th>
+                    <th  class="px-6 py-3 text-left text-xs font-medium text-gray-700
+                    uppercase tracking-wider" >Day </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                        Item Name
+                    </th>
+                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                        Price
+                    </th>
+
+                </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200">
+                <tr th:each="market, rowStat : ${response.markets}"
+                    class="hover:bg-gray-50 transition-colors duration-150">
+                    <td class="px-6 py-4 whitespace-nowrap">
+                        <span class="text-gray-700 font-medium" th:text="${rowStat.index + 1}"></span>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="text-sm text-gray-600"
+                                      th:text="${#temporals.format(market.date, 'MMM dd, yyyy')}">
+                                </span>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-medium text-gray-900" th:text="${market.day}"></div>
+                    </td>
+                    <td class="px-6 py-4">
+                        <div class="text-sm font-medium text-gray-900" th:text="${market.itemName}"></div>
+                    </td>
+                    <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="px-3 py-1 text-sm bg-green-100 text-green-800 font-medium rounded-full">
+                                    <span th:text="${#numbers.formatDecimal(market.itemPrice, 1, 2)}"></span>tk
+                                </span>
+                    </td>
+
+                </tr>
+
+                </tbody>
+            </table>
+        </div>
+
+    </div>
+
+    <div class="mt-6 text-center">
+        <p class="text-sm text-gray-500">
+            <i>Showing all shopping records</i>
+        </p>
+    </div>
+
+</div>
+<dialog id="calcModal" class="p-0 rounded-lg shadow-xl w-72">
+    <div class="p-4">
+        <!-- Header with close -->
+        <div class="flex justify-between items-center mb-3">
+            <span class="font-medium">Calculator</span>
+            <button onclick="document.getElementById('calcModal').close()" class="text-xl">&times;</button>
+        </div>
+
+        <!-- Display -->
+        <input type="text" id="calcDisplay" class="w-full mb-3 p-2 border rounded text-right" readonly value="">
+        <!-- Display -->
+        <input type="text" id="resultDisplay" class="w-full mb-3 p-2 border rounded text-right" readonly value="">
+
+        <!-- Buttons grid -->
+        <div class="grid grid-cols-4 gap-2">
+            <!-- Row 1 -->
+            <button onclick="calcInput('7')" class="p-2 border rounded hover:bg-gray-100">7</button>
+            <button onclick="calcInput('8')" class="p-2 border rounded hover:bg-gray-100">8</button>
+            <button onclick="calcInput('9')" class="p-2 border rounded hover:bg-gray-100">9</button>
+            <button onclick="calcInput('/')" class="p-2 border rounded bg-gray-200">/</button>
+
+            <!-- Row 2 -->
+            <button onclick="calcInput('4')" class="p-2 border rounded hover:bg-gray-100">4</button>
+            <button onclick="calcInput('5')" class="p-2 border rounded hover:bg-gray-100">5</button>
+            <button onclick="calcInput('6')" class="p-2 border rounded hover:bg-gray-100">6</button>
+            <button onclick="calcInput('*')" class="p-2 border rounded bg-gray-200">×</button>
+
+            <!-- Row 3 -->
+            <button onclick="calcInput('1')" class="p-2 border rounded hover:bg-gray-100">1</button>
+            <button onclick="calcInput('2')" class="p-2 border rounded hover:bg-gray-100">2</button>
+            <button onclick="calcInput('3')" class="p-2 border rounded hover:bg-gray-100">3</button>
+            <button onclick="calcInput('-')" class="p-2 border rounded bg-gray-200">-</button>
+
+            <!-- Row 4 -->
+            <button onclick="calcInput('0')" class="p-2 border rounded hover:bg-gray-100">0</button>
+            <button onclick="calcClear()" class="p-2 border rounded bg-red-200">C</button>
+            <button onclick="calcEquals()" class="p-2 border rounded bg-green-200">=</button>
+            <button onclick="calcInput('+')" class="p-2 border rounded bg-gray-200">+</button>
+        </div>
+    </div>
+</dialog>
+
+</body>
+</html>

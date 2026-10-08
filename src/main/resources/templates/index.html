@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Shopping Input</title>
+    <style>
+        .loader-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #f3f3f3;
+            border-top: 5px solid #3498db;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .loader-text {
+            margin-top: 15px;
+            color: white;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .loader-container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        /* Voice input styling - ADD THIS */
+        .voice-active {
+            background-color: #e8f0fe !important;
+            border-color: #3b82f6 !important;
+            box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2) !important;
+        }
+
+        .input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+        }
+
+        .voice-btn {
+            position: absolute;
+            right: 8px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 4px;
+            border-radius: 50%;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+
+        .voice-btn:hover {
+            background-color: #e5e7eb;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .voice-status {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #1f2937;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 9999px;
+            font-size: 14px;
+            z-index: 10000;
+            display: none;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .voice-status.active {
+            display: flex;
+            background: #3b82f6;
+        }
+
+        .voice-status.error {
+            background: #ef4444;
+        }
+
+        .voice-dot {
+            width: 10px;
+            height: 10px;
+            background-color: #10b981;
+            border-radius: 50%;
+            animation: blink 1s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        .input-wrapper:hover {
+            cursor: pointer;
+        }
+
+        input:hover {
+            background-color: #fef3c7 !important;
+            transition: all 0.2s ease;
+        }
+    </style>
+    <script src="https://cdn.tailwindcss.com"></script>
+<!--    <link rel="stylesheet" th:href="@{/tailwind.css}">-->
+<!--    <link rel="stylesheet" th:href="@{/webjars/tailwindcss/tailwind.min.css}">-->
+    <script type="text/javascript">
+        function setDate(){
+            var x = document.getElementById("date").value;
+            if(x.toString().length=10){
+                document.getElementById("search").click();
+            }
+        }
+
+        document.addEventListener('keypress', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent any default form submission
+                document.querySelector('button[value="save"]').click();
+            }
+        });
+
+
+        function calcInput(param) {
+            var opstr=document.getElementById("calcDisplay").value;
+            var result=document.getElementById("resultDisplay").value;
+
+            if(opstr===undefined){
+                document.getElementById("calcDisplay").value="";
+                opstr="";
+            }
+            if(result===undefined){
+                document.getElementById("resultDisplay").value="";
+                result="";
+            }
+
+            if(opstr.toString()===""){
+                if(param.toString()==="/" || param.toString()==="+" || param.toString()==="-" || param.toString()==="*"){
+                        return;
+                    }else{
+                    document.getElementById('calcDisplay').value=param.toString();
+                      }
+            }else{
+                if(param.toString()==="/" || param.toString()==="+" || param.toString()==="-" || param.toString()==="*"){
+                    if(opstr.toString().slice(-1)==="+" || opstr.toString().slice(-1)==="-" ||
+                        opstr.toString().slice(-1)==="/" || opstr.toString().slice(-1)==="*"){
+                        return;
+                    }else{
+                        document.getElementById('calcDisplay').value=opstr+ param.toString();
+                    }
+                }
+                else{
+                    if(opstr.toString().slice(-1)==="+" || opstr.toString().slice(-1)==="-" ||
+                        opstr.toString().slice(-1)==="/" || opstr.toString().slice(-1)==="*"){
+
+                        var lastChar=opstr.toString().slice(-1);
+                        var numb = opstr.slice(0, -1);
+                        if(result===""){
+                            if(lastChar==="+"){
+                                result=Number(numb.toString())+Number(param.toString());
+                            }
+                            if(lastChar==="-"){
+                                result=Number(numb.toString())-Number(param.toString());
+                            }
+                            if(lastChar==="*"){
+                                result=Number(numb.toString())*Number(param.toString());
+                            }
+                            if(lastChar==="/"){
+                                result=Number(numb.toString())/Number(param.toString());
+                            }
+                            document.getElementById('calcDisplay').value=opstr+param.toString();
+                            document.getElementById("resultDisplay").value=result;
+                        }else{
+                            if(lastChar==="+"){
+                                result=Number(result.toString())+Number(param.toString());
+                            }
+                            if(lastChar==="-"){
+                                result=Number(result.toString())-Number(param.toString());
+                            }
+                            if(lastChar==="*"){
+                                result=Number(result.toString())*Number(param.toString());
+                            }
+                            if(lastChar==="/"){
+                                result=Number(result.toString())/Number(param.toString());
+                            }
+                            document.getElementById('calcDisplay').value=opstr+param.toString();
+                            document.getElementById("resultDisplay").value=result;
+
+                        }
+
+                    }else{
+                        if(result===""){
+                            opstr=opstr.toString()+param.toString();
+                            document.getElementById("calcDisplay").value=opstr;
+                        }else{
+                            var numbers = opstr.toString().match(/\d+/g);  // Matches all number sequences
+                            var lastNumber = numbers[numbers.length - 1];
+                            var operators = opstr.toString().match(/[+\-*/]/g);  // Match all operators
+                            var lastOperator = operators[operators.length - 1];
+                            opstr=opstr.toString()+param.toString();
+                            var updatedLastNumber=Number(lastNumber.toString()+param.toString());
+
+
+                            if(lastOperator.toString()==='+'){
+                                result=Number(result.toString())-Number(lastNumber.toString());
+                                result=Number(result.toString())+updatedLastNumber;
+
+                            }
+                            if(lastOperator.toString()==='-'){
+                                result=Number(result.toString())+Number(lastNumber.toString());
+                                result=Number(result.toString())-updatedLastNumber;
+                            }
+                            if(lastOperator.toString()==='*'){
+                                result=Number(result.toString())/Number(lastNumber.toString());
+                                result=Number(result.toString())*updatedLastNumber;
+                            }
+                            if(lastOperator.toString()==='/'){
+                                result=Number(result.toString())*Number(lastNumber.toString());
+                                result=Number(result.toString())/updatedLastNumber;
+                            }
+                            document.getElementById("resultDisplay").value=result;
+                            document.getElementById("calcDisplay").value=opstr;
+                        }
+
+
+                    }
+
+                }
+            }
+
+        }
+
+
+        function calcClear() {
+            document.getElementById("calcDisplay").value="";
+            document.getElementById("resultDisplay").value="";
+        }
+
+        function calcEquals(){
+            var result = document.getElementById("resultDisplay").value;
+            document.getElementById("calcDisplay").value=result.toString();
+            document.getElementById("resultDisplay").value="";
+        }
+
+        function showLoader() {
+            document.getElementById('loaderOverlay').style.display = 'flex';
+        }
+
+        // Show loader when any submit button is clicked
+        // REPLACE your existing DOMContentLoaded with this
+        document.addEventListener('DOMContentLoaded', function() {
+            var buttons = document.querySelectorAll('button[type="submit"]');
+            buttons.forEach(function(button) {
+                button.addEventListener('click', function() {
+                    showLoader();
+                });
+            });
+
+            initVoiceInput(); // ADD THIS LINE - Initialize voice input
+        });
+
+        // ============================================
+        // ENHANCED VOICE INPUT - Multi-item Support
+        // ============================================
+
+        let currentActiveInput = null;
+        let isListening = false;
+        let recognition = null;
+        let pauseTimeout = null;
+        const PAUSE_DURATION = 800;
+        const COMMA_TRIGGERS = ['and', 'comma', 'then', 'also', 'plus'];
+
+        function initVoiceInput() {
+            if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+                showVoiceStatus('Voice input not supported', 'error');
+                return;
+            }
+            const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+            recognition = new SpeechRecognition();
+            recognition.continuous = true;
+            recognition.interimResults = true;
+            recognition.lang = 'en-US';
+            setupVoiceForInputs();
+            recognition.onresult = function(event) {
+                let finalTranscript = '';
+                for (let i = event.resultIndex; i < event.results.length; i++) {
+                    if (event.results[i].isFinal) {
+                        finalTranscript += event.results[i][0].transcript + ' ';
+                    }
+                }
+                if (finalTranscript && currentActiveInput) {
+                    processVoiceInput(finalTranscript);
+                }
+            };
+            recognition.onerror = function(event) {
+                showVoiceStatus('Error: ' + event.error, 'error');
+                stopListening();
+            };
+            recognition.onend = function() {
+                if (isListening) {
+                    try { recognition.start(); } catch(e) { stopListening(); }
+                }
+            };
+        }
+
+        function processVoiceInput(transcript) {
+            if (!currentActiveInput) return;
+
+            // For NUMBER fields (item price) - RAW input, NO commas, NO pause logic
+            if (currentActiveInput.type === 'number') {
+                // Just extract numbers directly from speech
+                let numbers = transcript.match(/\d+(?:\.\d+)?/g);
+                if (numbers) {
+                    currentActiveInput.value = numbers[0];
+                    showVoiceStatus('✓ Price: ' + numbers[0], 'success');
+                }
+                currentActiveInput.dispatchEvent(new Event('input', { bubbles: true }));
+                return;
+            }
+
+            // For TEXT fields (item name) - multi-item logic with commas and "and"
+            let words = transcript.toLowerCase().split(/\s+/);
+            let items = [];
+            let currentItem = '';
+
+            for (let i = 0; i < words.length; i++) {
+                let word = words[i];
+                if (COMMA_TRIGGERS.includes(word)) {
+                    if (currentItem.trim()) items.push(currentItem.trim());
+                    currentItem = '';
+                } else {
+                    currentItem += (currentItem ? ' ' : '') + word;
+                }
+            }
+            if (currentItem.trim()) items.push(currentItem.trim());
+
+            if (items.length === 0) return;
+
+            let existing = currentActiveInput.value;
+            currentActiveInput.value = existing ? existing + ', ' + items.join(', ') : items.join(', ');
+            showVoiceStatus('✓ Added: ' + items.join(', '), 'success');
+
+            currentActiveInput.dispatchEvent(new Event('input', { bubbles: true }));
+            resetPauseTimer();
+        }
+
+        function resetPauseTimer() {
+            if (pauseTimeout) clearTimeout(pauseTimeout);
+            pauseTimeout = setTimeout(() => {
+                // ONLY add comma for TEXT fields - SKIP number fields completely
+                if (isListening && currentActiveInput && currentActiveInput.type !== 'number') {
+                    if (currentActiveInput.value && !currentActiveInput.value.endsWith(', ')) {
+                        currentActiveInput.value += ', ';
+                        currentActiveInput.dispatchEvent(new Event('input', { bubbles: true }));
+                    }
+                }
+            }, PAUSE_DURATION);
+        }
+
+        function setupVoiceForInputs() {
+            document.querySelectorAll('input[type="text"], input[type="number"]').forEach(input => {
+                if (input.id === 'calcDisplay' || input.id === 'resultDisplay' || input.parentElement.classList.contains('input-wrapper')) return;
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'input-wrapper';
+                input.parentNode.insertBefore(wrapper, input);
+                wrapper.appendChild(input);
+
+                const voiceBtn = document.createElement('button');
+                voiceBtn.innerHTML = '🎤';
+                voiceBtn.className = 'voice-btn';
+                voiceBtn.type = 'button';
+                wrapper.appendChild(voiceBtn);
+
+                voiceBtn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    startVoiceForInput(input);
+                });
+
+                // SIMPLE: Track mouse enter - when mouse goes over field
+                input.addEventListener('mouseenter', () => {
+                    // Switch voice input to this field immediately
+                    if (currentActiveInput !== input) {
+                        // Remove highlight from old field
+                        if (currentActiveInput) {
+                            currentActiveInput.classList.remove('voice-active');
+                        }
+                        // Set new field
+                        currentActiveInput = input;
+                        currentActiveInput.classList.add('voice-active');
+                        showVoiceStatus('🎤 Now speaking to: ' + (input.type === 'number' ? 'Price' : 'Item Name'), 'listening');
+                    }
+                });
+
+                // Keep focus event as backup
+                input.addEventListener('focus', () => {
+                    if (currentActiveInput !== input) {
+                        if (currentActiveInput) {
+                            currentActiveInput.classList.remove('voice-active');
+                        }
+                        currentActiveInput = input;
+                        currentActiveInput.classList.add('voice-active');
+                    }
+                });
+            });
+        }
+
+        function startVoiceForInput(input) {
+            if (!recognition) return;
+
+            // Stop any ongoing recognition first
+            if (isListening) {
+                recognition.stop();
+                // Wait for stop to complete then start new
+                setTimeout(() => {
+                    startNewSession(input);
+                }, 200);
+            } else {
+                startNewSession(input);
+            }
+        }
+
+        function startNewSession(input) {
+            // IMPORTANT: Clear previous input highlight FIRST
+            if (currentActiveInput && currentActiveInput !== input) {
+                currentActiveInput.classList.remove('voice-active');
+            }
+
+            // Set new current input
+            currentActiveInput = input;
+            currentActiveInput.classList.add('voice-active');
+            isListening = true;
+
+            try {
+                recognition.start();
+                showVoiceStatus('🎤 Listening...', 'listening');
+                resetPauseTimer();
+            } catch(e) {
+                showVoiceStatus('Allow microphone access', 'error');
+                stopListening();
+            }
+        }
+
+        function stopListening() {
+            isListening = false;
+            if (pauseTimeout) clearTimeout(pauseTimeout);
+            if (recognition) {
+                try { recognition.stop(); } catch(e) {}
+            }
+            if (currentActiveInput) {
+                currentActiveInput.classList.remove('voice-active');
+            }
+            setTimeout(() => {
+                let s = document.getElementById('voiceStatus');
+                if (s && !isListening) {
+                    s.classList.remove('active', 'error');
+                    s.style.display = 'none';
+                }
+            }, 2000);
+        }
+
+        function showVoiceStatus(message, type) {
+            let s = document.getElementById('voiceStatus');
+            if (!s) { s = document.createElement('div'); s.id = 'voiceStatus'; s.className = 'voice-status'; document.body.appendChild(s); }
+            s.innerHTML = (type === 'listening' ? '<div class="voice-dot"></div>' : (type === 'success' ? '✓ ' : '⚠️ ')) + message;
+            s.classList.remove('error');
+            s.classList.add(type === 'error' ? 'error' : 'active');
+            s.style.display = 'flex';
+            if (type === 'success') setTimeout(() => { if (s.style.display === 'flex') s.style.display = 'none'; }, 3000);
+        }
+
+
+    </script>
+
+
+</head>
+<body class="bg-gray-50 min-h-screen">
+
+<div id="loaderOverlay" class="loader-overlay">
+    <div class="loader-container">
+        <div class="loader"></div>
+        <div class="loader-text">Processing...</div>
+    </div>
+</div>
+
+<div class="flex flex-wrap -mx-2  py-4 px-3" style="width:70%;">
+
+    <div class="w-1/2 lg:w-1/4 px-2">
+        <a th:href="@{/list}"  class="px-4 py-2 text-sm font-medium rounded-md ">
+            All Item's
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/4 px-2">
+        <a th:href="@{/}"  class="px-4 py-2 text-sm font-medium rounded-md " >
+            Refresh
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/4 px-2">
+        <a th:href="@{/download/excel}"  class="px-4 py-2 text-sm font-medium rounded-md ">
+            Download excel..
+        </a>
+    </div>
+
+    <div class="w-1/2 lg:w-1/4 px-2 text:left" >
+        <a th:href="@{/download/pdf}"  class="px-4 py-2 text-sm font-medium rounded-md ">
+            Download Pdf
+        </a>
+    </div>
+
+</div>
+
+
+<div class="container mx-auto px-4 py-1">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-4">
+        <div class="lg:col-span-2">
+            <div class="bg-white rounded-xl shadow-md p-2">
+                <form th:object="${marketForm}" th:action="@{/saveMarkets}" method="post">
+                    <div class="mb-3 p-2 bg-gray-50 rounded-lg">
+                        <div class="flex flex-col sm:flex-row justify-between">
+                            <div class="flex items-center">
+                                <span class="text-gray-700 font-medium mr-3">Date:</span>
+                                <input id="date"  onchange="setDate();" type="date" th:field="*{date}" required class="px-4 py-1 border border-gray-300 rounded-lg focus:ring-2
+                                 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+
+                                <button type="button" onclick="document.getElementById('calcModal').showModal()"
+                                        class="mx-4 px-4 py-1 border border-gray-300 rounded-lg">
+                                    Calculator
+                                </button>
+                            </div>
+                            <button  style="display:none;" id="search" type="submit"  name="operation"  th:value="'datewiseShop'"
+                                      class="px-6 bg-green-300 text-white font-medium rounded-lg hover:bg-yellow-200 transition-colors duration-200">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-100">
+                            <tr>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                    SL
+                                </th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                    Item Name
+                                </th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                    Category
+                                </th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                    Item Price
+                                </th>
+                                <th class="px-4 py-2 text-left text-xs font-medium text-gray-700 uppercase tracking-wider">
+                                    Actions
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                            <tr th:each="market, rowStat : *{markets}"
+                                class="hover:bg-gray-50 transition-colors duration-150">
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                    <span class="text-gray-700 font-medium" th:text="${rowStat.index + 1}"></span>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="hidden" th:field="*{markets[__${rowStat.index}__].id}">
+                                    <input type="text"
+                                           th:field="*{markets[__${rowStat.index}__].itemName}"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                                </td>
+                                <td class="px-4 py-2">
+                                    <select
+                                            th:field="*{markets[__${rowStat.index}__].itemType}"
+                                            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                                        <option value="cosmetics">cosmetics</option>
+                                        <option value="costume">costume</option>
+                                        <option value="medicine">medicine</option>
+                                        <option value="grocery">grocery</option>
+                                        <option value="fastfood">fastfood</option>
+                                        <option value="vegetable">vegetable</option>
+                                        <option value="oil/masala">oil/masala</option>
+                                        <option value="fish/meat">fish/meat</option>
+                                        <option value="fruits">fruits</option>
+                                        <option value="transport">transport</option>
+                                        <option value="rent/monthly-fee">rent/monthly-fee</option>
+                                        <option value="others">others</option>
+                                    </select>
+                                </td>
+                                <td class="px-4 py-2">
+                                    <input type="number"
+                                           th:field="*{markets[__${rowStat.index}__].itemPrice}"
+                                           step="0.01"
+                                           class="w-full px-3 py-2 border border-gray-300 rounded-md focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none transition">
+                                </td>
+
+                                <td class="px-4 py-2 whitespace-nowrap">
+                                    <div class="flex flex-col sm:flex-row gap-2">
+                                        <button type="submit"
+                                                name="operation"
+                                                th:value="'delete/' + ${rowStat.index}"
+                                                class="px-4 py-2 bg-red-100 text-red-700 text-sm font-medium rounded-md hover:bg-red-200 transition-colors duration-200">
+                                            Del
+                                        </button>
+                                        <button type="submit"
+                                                name="operation"
+                                                th:value="'add/' + ${rowStat.index}"
+                                                class="px-4 py-2 bg-green-100 text-green-700 text-sm font-medium rounded-md hover:bg-green-200 transition-colors duration-200">
+                                            Add
+                                        </button>
+                                    </div>
+                                </td>
+                            </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="mt-3 text-center">
+                        <button type="submit" name="operation" value="save"
+                               class="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg
+                               hover:bg-blue-700 transition-colors duration-200 shadow-md">
+                            Save Items
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Right Column - Summary -->
+        <div class="lg:col-span-1">
+            <div class="bg-white rounded-xl shadow-md p-2 h-fit">
+                <h2 class="text-xl font-bold text-gray-800 mb-6 pb-2 border-b border-gray-200">
+                    Shopping Summary
+                </h2>
+
+                <div class="space-y-6">
+                    <div class="bg-gray-50 rounded-lg p-2">
+                        <div class="text-center">
+                            <p class="text-gray-600 text-sm mb-2">Total Amount</p>
+                            <p class="text-3xl font-bold text-green-600">
+                                BDT <span th:text="${marketForm.totalPrice}">0.00</span>
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="border-t border-gray-200 pt-2">
+                        <h3 class="text-sm font-medium text-gray-700 mb-3">Items Summary</h3>
+                        <div class="space-y-2">
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Items Count</span>
+                                <span class="font-medium text-gray-800" th:text="${marketForm.markets.size()}">0</span>
+                            </div>
+                            <div class="flex justify-between text-sm">
+                                <span class="text-gray-600">Date</span>
+                                <span class="font-medium text-gray-800" th:text="${marketForm.date}">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-50 rounded-lg p-2 border border-blue-100">
+                        <p class="text-sm text-blue-700">
+                            <span class="font-medium">Note:</span> Click "Save Items" to store all your shopping records.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <dialog id="calcModal" class="p-0 rounded-lg shadow-xl w-72">
+        <div class="p-4">
+            <!-- Header with close -->
+            <div class="flex justify-between items-center mb-3">
+                <span class="font-medium">Calculator</span>
+                <button onclick="document.getElementById('calcModal').close()" class="text-xl">&times;</button>
+            </div>
+
+            <!-- Display -->
+            <input type="text" id="calcDisplay" class="w-full mb-3 p-2 border rounded text-right" readonly value="">
+            <!-- Display -->
+            <input type="text" id="resultDisplay" class="w-full mb-3 p-2 border rounded text-right" readonly value="">
+
+            <!-- Buttons grid -->
+            <div class="grid grid-cols-4 gap-2">
+                <!-- Row 1 -->
+                <button onclick="calcInput('7')" class="p-2 border rounded hover:bg-gray-100">7</button>
+                <button onclick="calcInput('8')" class="p-2 border rounded hover:bg-gray-100">8</button>
+                <button onclick="calcInput('9')" class="p-2 border rounded hover:bg-gray-100">9</button>
+                <button onclick="calcInput('/')" class="p-2 border rounded bg-gray-200">/</button>
+
+                <!-- Row 2 -->
+                <button onclick="calcInput('4')" class="p-2 border rounded hover:bg-gray-100">4</button>
+                <button onclick="calcInput('5')" class="p-2 border rounded hover:bg-gray-100">5</button>
+                <button onclick="calcInput('6')" class="p-2 border rounded hover:bg-gray-100">6</button>
+                <button onclick="calcInput('*')" class="p-2 border rounded bg-gray-200">×</button>
+
+                <!-- Row 3 -->
+                <button onclick="calcInput('1')" class="p-2 border rounded hover:bg-gray-100">1</button>
+                <button onclick="calcInput('2')" class="p-2 border rounded hover:bg-gray-100">2</button>
+                <button onclick="calcInput('3')" class="p-2 border rounded hover:bg-gray-100">3</button>
+                <button onclick="calcInput('-')" class="p-2 border rounded bg-gray-200">-</button>
+
+                <!-- Row 4 -->
+                <button onclick="calcInput('0')" class="p-2 border rounded hover:bg-gray-100">0</button>
+                <button onclick="calcClear()" class="p-2 border rounded bg-red-200">C</button>
+                <button onclick="calcEquals()" class="p-2 border rounded bg-green-200">=</button>
+                <button onclick="calcInput('+')" class="p-2 border rounded bg-gray-200">+</button>
+            </div>
+        </div>
+    </dialog>
+
+</div>
+
+
+</body>
+</html>

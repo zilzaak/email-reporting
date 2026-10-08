@@ -1,4 +1,4 @@
-package app.dto;
+package app.dto.metadata;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

@@ -1,17 +1,16 @@
 
-/*
-package app.cronJobs;
+package app.jobs;
 
-import app.service.EmailMetadataPersistToDBService;
+import app.service.MetadataDBOperationService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class EmailMetadataFetcherCronJob {
-    private final EmailMetadataPersistToDBService emailMetadataPersistToDBService;
-    @Scheduled(cron = "0 0/1 * * * ?")
+public class EmailMetadataFetchJob {
+    private final MetadataDBOperationService emailMetadataPersistToDBService;
+    @Scheduled(cron = "0 0/2 * * * ?")
     public void executeTask() {
         try {
             emailMetadataPersistToDBService.fetchEmailMetadataAndPersistToDB();
@@ -20,6 +19,9 @@ public class EmailMetadataFetcherCronJob {
         }
     }
 }
-*/
+
+
+
+
 
 
