@@ -5,31 +5,16 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031545d2-d2ed-49b0-a121-8f527fe3e723" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/config/ReportingSetupTypeConverter.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/ApprovedMailBoxDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/MetadataSearchResultProjection.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/NotRepliedReciversDTO.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/entity/EmailSubject.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/enums/ReportingSetupType.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/app/util/CommonService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/GmailConfig.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cronJobs/EmailMetadataFetcherCronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailMetadataFetchJob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/cronJobs/EmailsReplierInfoFetcherCronJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailsReplySyncJob.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/ApiDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/ApiDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/EmailMetadataDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/EmailMetadataDTO.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/RootSenderDto.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/entity/EmailMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/entity/EmailMetadata.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/EmailMetadataRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/EmailMetadataRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataFetchService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataPersistToDBService.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/GmailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/config/GmailFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/GmailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/config/GmailFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/jobs/EmailMetadataFetchJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailMetadataFetchJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/EmailReportingSetupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/EmailReportingSetupRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/EmailSlaReportingApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/EmailSlaReportingApplication.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/config/GmailConfig.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/config/SwaggerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/config/SwaggerConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/controller/EmailMetadataController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/controller/EmailMetadataController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/controller/EmailMetadataController.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/cronJobs/EmailsReplierInfoFetcherCronJob.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO$ApiDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO$ApiDTOBuilder.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO.class" afterDir="false" />
@@ -102,8 +87,8 @@
     "ModuleVcsDetector.initialDetectionPerformed": "true",
     "RequestMappingsPanelOrder0": "0",
     "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "75",
-    "RequestMappingsPanelWidth1": "75",
+    "RequestMappingsPanelWidth0": "900",
+    "RequestMappingsPanelWidth1": "899",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
     "RunOnceActivity.git.unshallow": "true",

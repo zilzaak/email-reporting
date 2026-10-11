@@ -44,7 +44,7 @@ public class GmailFactory {
                         GoogleNetHttpTransport.newTrustedTransport(),
                         GsonFactory.getDefaultInstance(),
                         new HttpCredentialsAdapter(creds))
-                       .setApplicationName("DIU-Email-SLA")
+                       .setApplicationName(APP_NAME)
                        .build();
             } catch (Exception e) {
                 throw new RuntimeException("Gmail init failed for " + mb, e);

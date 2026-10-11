@@ -2,7 +2,6 @@ package app.repository;
 
 import app.dto.metadata.ApprovedMailBox;
 import app.entity.EmailReportingSetup;
-import app.enums.ReportingSetupType;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,5 +20,5 @@ public interface EmailReportingSetupRepository extends JpaRepository<EmailReport
             " and ei.employee_type_id = :employeeTypeId " +
             " and ei.email not in (select email from UM_HR_ESR_Email_Reporting_Setup where setup_type = :setupId)",nativeQuery = true )
     List<ApprovedMailBox> getApprovedMailBoxes(@Param("employeeTypeId") Long employeeTypeId,
-                                               @Param("setupId") ReportingSetupType setupId);
+                                               @Param("setupId") Long setupId);
 }

@@ -45,7 +45,7 @@ public class MetadataDBOperationService {
         log.info("Cron job triggered: persisting email metadata for target date: {}", targetDate);
         int totalSaved = 0;
         int totalFailed = 0;
-        List<ApprovedMailBox> mailBoxDTOS=emailReportingSetupRepository.getApprovedMailBoxes(2L, ReportingSetupType.EXCLUDE_MAIL_BOX);
+        List<ApprovedMailBox> mailBoxDTOS=emailReportingSetupRepository.getApprovedMailBoxes(2L, ReportingSetupType.EXCLUDE_MAIL_BOX.getValue());
         for (ApprovedMailBox mailbox : mailBoxDTOS) {
             String trimmedMailbox = mailbox.getEmail().trim();
             if (trimmedMailbox.isEmpty()) continue;
