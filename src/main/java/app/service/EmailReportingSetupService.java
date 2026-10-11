@@ -93,10 +93,11 @@ public class EmailReportingSetupService {
                 .build());
     }
 
-    public ApiDTO searchEmployee(String employeeId,String mail, Long facultyId, Long departmentId, Long designationId, Long categoryId, Long typeId, Integer pageNumber, Integer pageSize) {
+    public ApiDTO searchEmployee(ReportingSetupType setupType,String employeeId,String mail, Long facultyId, Long departmentId, Long designationId, Long categoryId, Long typeId, Integer pageNumber, Integer pageSize,String operation) {
         return executeProcedure(EmailReportingSetupProcDTO.builder()
                 .employeeIds(employeeId)
                 .emails(mail)
+                .setupType(setupType)
                 .facultyId(facultyId)
                 .departmentId(departmentId)
                 .designationId(designationId)
@@ -104,7 +105,7 @@ public class EmailReportingSetupService {
                 .typeId(typeId)
                 .pageNumber(pageNumber != null ? pageNumber : 1)
                 .pageSize(pageSize != null ? pageSize : 10)
-                .operation("S1")
+                .operation(operation)
                 .build());
     }
 
@@ -121,7 +122,7 @@ public class EmailReportingSetupService {
                 .setupType(setupType)
                 .pageNumber(pageNumber != null ? pageNumber : 1)
                 .pageSize(pageSize != null ? pageSize : 10)
-                .operation("S2")
+                .operation("SL")
                 .build());
     }
 
@@ -166,7 +167,7 @@ public class EmailReportingSetupService {
                             new SqlOutParameter("out_message_description", Types.VARCHAR)
                     );
 
-            boolean isSearch = "S1".equalsIgnoreCase(operation) || "S2".equalsIgnoreCase(operation);
+            boolean isSearch = "SL".equalsIgnoreCase(operation) || "EMS".equalsIgnoreCase(operation) || "RCS".equalsIgnoreCase(operation);
             if (isSearch) {
                 jdbcCall.returningResultSet("#result-set-1", new ColumnMapRowMapper());
             }

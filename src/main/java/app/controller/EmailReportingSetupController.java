@@ -1,3 +1,4 @@
+/*
 package app.controller;
 
 import app.dto.ApiDTO;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/email-reporting-setup")
+@RequestMapping("/api/email-sla-report/reporting-setup")
 @RequiredArgsConstructor
 @Tag(name = "Email reporting setup")
 public class EmailReportingSetupController {
@@ -44,10 +45,12 @@ public class EmailReportingSetupController {
         return ResponseEntity.ok(response);
     }
 
-    @GetMapping("/employee-list")
+
+    @GetMapping("/exclude-mailbox/employee-list")
     @Operation(summary = "Search employee information",
             description = "Search employee information")
-    public ResponseEntity<ApiDTO> searchEmployee(
+    public ResponseEntity<ApiDTO> searchEmployeeExcludeMailBox(
+            @RequestParam(required = false) ReportingSetupType setupType,
             @RequestParam(required = false) String employeeId,
             @RequestParam(required = false) String email,
             @RequestParam(required = false) Long facultyId,
@@ -59,7 +62,28 @@ public class EmailReportingSetupController {
             @RequestParam(required = false, defaultValue = "10") Integer pageSize
     ) {
         ApiDTO response = reportingConditionSetupService.searchEmployee(
-                employeeId,email, facultyId, departmentId, designationId, categoryId, typeId, pageNumber, pageSize
+                setupType, employeeId,email, facultyId, departmentId, designationId, categoryId, typeId, pageNumber, pageSize,"EMS"
+        );
+        return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/exclude-countability/employee-list")
+    @Operation(summary = "Search employee information",
+            description = "Search employee information")
+    public ResponseEntity<ApiDTO> searchEmployee(
+            @RequestParam(required = false) ReportingSetupType setupType,
+            @RequestParam(required = false) String employeeId,
+            @RequestParam(required = false) String email,
+            @RequestParam(required = false) Long facultyId,
+            @RequestParam(required = false) Long departmentId,
+            @RequestParam(required = false) Long designationId,
+            @RequestParam(required = false) Long categoryId, // employee category
+            @RequestParam(required = false) Long typeId,    // employee type
+            @RequestParam(required = false, defaultValue = "1") Integer pageNumber,
+            @RequestParam(required = false, defaultValue = "10") Integer pageSize
+    ) {
+        ApiDTO response = reportingConditionSetupService.searchEmployee(
+                setupType, employeeId,email, facultyId, departmentId, designationId, categoryId, typeId, pageNumber, pageSize,"RCS"
         );
         return ResponseEntity.ok(response);
     }
@@ -85,3 +109,4 @@ public class EmailReportingSetupController {
         return ResponseEntity.ok(response);
     }
 }
+*/

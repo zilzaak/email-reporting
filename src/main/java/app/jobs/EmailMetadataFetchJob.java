@@ -10,10 +10,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmailMetadataFetchJob {
     private final MetadataDBOperationService emailMetadataPersistToDBService;
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/4 * * * ?")
     public void executeTask() {
         try {
-            emailMetadataPersistToDBService.fetchEmailMetadataAndPersistToDB();
+           emailMetadataPersistToDBService.fetchEmailMetadataAndPersistToDB();
         } catch (Exception e) {
             e.printStackTrace();
         }

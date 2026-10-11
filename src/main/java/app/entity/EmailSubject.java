@@ -3,6 +3,8 @@ package app.entity;
 import jakarta.persistence.*;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name="UM_HR_ESR_Email_Subject")
@@ -31,6 +33,9 @@ public class EmailSubject {
 
     @Column(name="root_message_id")
     private String rootMessageId;
+
+    @OneToMany(cascade = CascadeType.ALL,fetch=FetchType.LAZY,mappedBy ="emailSubject",orphanRemoval = true)
+    private List<EmailMetadata> details=new ArrayList<>();
 
     @Column(name="created_at")
     private LocalDateTime createdAt;

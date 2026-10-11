@@ -9,10 +9,10 @@ import org.springframework.stereotype.Component;
 @RequiredArgsConstructor
 public class EmailsReplySyncJob {
       private final MetadataDBOperationService dbOperationService;
-    @Scheduled(cron = "0 0/2 * * * ?")
+    @Scheduled(cron = "0 0/30 * * * ?")
     public void executeTask() {
         try {
-           // dbOperationService.fetchEmailReplyInfoAndSyncToDB();
+            dbOperationService.fetchEmailReplyInfoAndSyncToDB();
         } catch (Exception e) {
             e.printStackTrace();
         }

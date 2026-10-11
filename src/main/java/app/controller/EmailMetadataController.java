@@ -1,3 +1,4 @@
+/*
 package app.controller;
 
 import app.dto.ApiDTO;
@@ -12,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 import java.time.LocalDate;
 
 @RestController
-@RequestMapping("/email-metadata")
+@RequestMapping("/api/email-sla-report/metadata")
 @RequiredArgsConstructor
 @Tag(name ="email sla reporting")
 public class EmailMetadataController {
@@ -45,3 +46,4 @@ public class EmailMetadataController {
 
 
 }
+*/

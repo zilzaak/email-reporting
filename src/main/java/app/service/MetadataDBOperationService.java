@@ -2,7 +2,7 @@ package app.service;
 
 import app.config.GmailFactory;
 import app.dto.ApiDTO;
-import app.dto.metadata.ApprovedMailBoxDTO;
+import app.dto.metadata.ApprovedMailBox;
 import app.dto.metadata.EmailMetadataDTO;
 import app.dto.metadata.NotRepliedReciversDTO;
 import app.enums.ReportingSetupType;
@@ -40,13 +40,13 @@ public class MetadataDBOperationService {
 
 
     public void fetchEmailMetadataAndPersistToDB() {
-        LocalDate targetDate = LocalDate.now().minusDays(2);
+        LocalDate targetDate = LocalDate.now().minusDays(1);
         //LocalDate targetDate = LocalDate.parse("2026-09-02");
         log.info("Cron job triggered: persisting email metadata for target date: {}", targetDate);
         int totalSaved = 0;
         int totalFailed = 0;
-        List<ApprovedMailBoxDTO> mailBoxDTOS=emailReportingSetupRepository.getApprovedMailBoxes(3L, ReportingSetupType.EXCLUDE_MAIL_BOX);
-        for (ApprovedMailBoxDTO mailbox : mailBoxDTOS) {
+        List<ApprovedMailBox> mailBoxDTOS=emailReportingSetupRepository.getApprovedMailBoxes(2L, ReportingSetupType.EXCLUDE_MAIL_BOX);
+        for (ApprovedMailBox mailbox : mailBoxDTOS) {
             String trimmedMailbox = mailbox.getEmail().trim();
             if (trimmedMailbox.isEmpty()) continue;
             try {
