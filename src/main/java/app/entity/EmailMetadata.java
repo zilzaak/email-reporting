@@ -37,6 +37,9 @@ public class EmailMetadata {
     @Column(name="is_countable")
     private Boolean isCountable;
 
+    @Column(name="timely_replied")
+    private Boolean timelyReplied;
+
     @Column(name="created_at")
     private LocalDateTime createdAt;
 

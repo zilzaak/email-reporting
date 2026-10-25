@@ -34,6 +34,6 @@ public class CommonService {
 
     public static final DateTimeFormatter DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     public static final Pattern EMAIL_PATTERN = Pattern.compile("[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}");
-    public static final List<String> HEADERS_TO_FETCH = List.of("From", "To", "Cc", "Date", "Subject", "Message-ID", "In-Reply-To");
+    public static final List<String> HEADERS_TO_FETCH = List.of("From", "References","To", "Cc", "Date", "Subject", "Message-ID", "In-Reply-To");
 
 }

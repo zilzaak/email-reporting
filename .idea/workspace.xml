@@ -5,27 +5,31 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="031545d2-d2ed-49b0-a121-8f527fe3e723" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/main/java/app/repository/EmailSubjectRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/app/config/GmailFactory.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/config/GmailFactory.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/metadata/EmailMetadataDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/EmailMetadataDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/dto/metadata/NotRepliedReciversDTO.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/dto/metadata/NotRepliedReciversDTO.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/entity/EmailMetadata.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/entity/EmailMetadata.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/jobs/EmailMetadataFetchJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailMetadataFetchJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/jobs/EmailsReplySyncJob.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/jobs/EmailsReplySyncJob.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/EmailMetadataRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/EmailMetadataRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/repository/EmailReportingSetupRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/repository/EmailReportingSetupRepository.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/app/util/CommonService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/app/util/CommonService.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/resources/procedure/email_reporting_setup_proc.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/procedure/email_reporting_setup_proc.sql" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/EmailSlaReportingApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/EmailSlaReportingApplication.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/config/GmailConfig.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/config/SwaggerConfig.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/config/SwaggerConfig.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/controller/EmailMetadataController.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/cronJobs/EmailsReplierInfoFetcherCronJob.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO$ApiDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO$ApiDTOBuilder.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/ApiDTO.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/EmailMetadataDTO$EmailMetadataDTOBuilder.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/EmailMetadataDTO.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/RootSenderDto.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/metadata/EmailMetadataDTO$EmailMetadataDTOBuilder.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/metadata/EmailMetadataDTO$EmailMetadataDTOBuilder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/metadata/EmailMetadataDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/metadata/EmailMetadataDTO.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/app/dto/metadata/NotRepliedReciversDTO.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/dto/metadata/NotRepliedReciversDTO.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/entity/EmailMetadata.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/entity/EmailMetadata.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/repository/EmailMetadataRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/app/repository/EmailMetadataRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/service/EmailMetadataFetchService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/service/EmailMetadataPersistToDBService.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/app/service/GmailFactory.class" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" beforeDir="false" afterPath="$PROJECT_DIR$/target/maven-status/maven-compiler-plugin/compile/default-compile/createdFiles.lst" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -72,44 +76,44 @@
     <option name="hideEmptyMiddlePackages" value="true" />
     <option name="showLibraryContents" value="true" />
   </component>
-  <component name="PropertiesComponent"><![CDATA[{
-  "keyToString": {
-    "Application.EmailSlaReportingApplication.executor": "Run",
-    "Application.HisabPotroApplication.executor": "Run",
-    "Maven.hisabPotro [clean].executor": "Run",
-    "Maven.hisabPotro [compile].executor": "Run",
-    "Maven.hisabPotro [install].executor": "Run",
-    "Maven.hisabPotro [package].executor": "Run",
-    "Maven.hisabPotro [test].executor": "Run",
-    "Maven.hisabPotro [validate].executor": "Run",
-    "Maven.sla-reporting [clean].executor": "Run",
-    "Maven.sla-reporting [install].executor": "Run",
-    "ModuleVcsDetector.initialDetectionPerformed": "true",
-    "RequestMappingsPanelOrder0": "0",
-    "RequestMappingsPanelOrder1": "1",
-    "RequestMappingsPanelWidth0": "900",
-    "RequestMappingsPanelWidth1": "899",
-    "RunOnceActivity.ShowReadmeOnStart": "true",
-    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
-    "RunOnceActivity.git.unshallow": "true",
-    "Spring Boot.EmailSlaReportingApplication.executor": "Debug",
-    "Spring Boot.HisabPotroApplication.executor": "Run",
-    "git-widget-placeholder": "master",
-    "ignore.virus.scanning.warn.message": "true",
-    "kotlin-language-version-configured": "true",
-    "last_opened_file_path": "D:/Projects/email-sla-reporting/src/main/resources",
-    "node.js.detected.package.eslint": "true",
-    "node.js.detected.package.tslint": "true",
-    "node.js.selected.package.eslint": "(autodetect)",
-    "node.js.selected.package.tslint": "(autodetect)",
-    "nodejs_package_manager_path": "npm",
-    "project.structure.last.edited": "Modules",
-    "project.structure.proportion": "0.15",
-    "project.structure.side.proportion": "0.2",
-    "settings.editor.selected.configurable": "preferences.lookFeel",
-    "vue.rearranger.settings.migration": "true"
+  <component name="PropertiesComponent">{
+  &quot;keyToString&quot;: {
+    &quot;Application.EmailSlaReportingApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Application.HisabPotroApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hisabPotro [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hisabPotro [compile].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hisabPotro [install].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hisabPotro [package].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hisabPotro [test].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.hisabPotro [validate].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.sla-reporting [clean].executor&quot;: &quot;Run&quot;,
+    &quot;Maven.sla-reporting [install].executor&quot;: &quot;Run&quot;,
+    &quot;ModuleVcsDetector.initialDetectionPerformed&quot;: &quot;true&quot;,
+    &quot;RequestMappingsPanelOrder0&quot;: &quot;0&quot;,
+    &quot;RequestMappingsPanelOrder1&quot;: &quot;1&quot;,
+    &quot;RequestMappingsPanelWidth0&quot;: &quot;75&quot;,
+    &quot;RequestMappingsPanelWidth1&quot;: &quot;75&quot;,
+    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252&quot;: &quot;true&quot;,
+    &quot;RunOnceActivity.git.unshallow&quot;: &quot;true&quot;,
+    &quot;Spring Boot.EmailSlaReportingApplication.executor&quot;: &quot;Run&quot;,
+    &quot;Spring Boot.HisabPotroApplication.executor&quot;: &quot;Run&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;master&quot;,
+    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
+    &quot;kotlin-language-version-configured&quot;: &quot;true&quot;,
+    &quot;last_opened_file_path&quot;: &quot;D:/Projects/email-sla-reporting/src/main/resources&quot;,
+    &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
+    &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
+    &quot;node.js.selected.package.eslint&quot;: &quot;(autodetect)&quot;,
+    &quot;node.js.selected.package.tslint&quot;: &quot;(autodetect)&quot;,
+    &quot;nodejs_package_manager_path&quot;: &quot;npm&quot;,
+    &quot;project.structure.last.edited&quot;: &quot;Modules&quot;,
+    &quot;project.structure.proportion&quot;: &quot;0.15&quot;,
+    &quot;project.structure.side.proportion&quot;: &quot;0.2&quot;,
+    &quot;settings.editor.selected.configurable&quot;: &quot;preferences.lookFeel&quot;,
+    &quot;vue.rearranger.settings.migration&quot;: &quot;true&quot;
   }
-}]]></component>
+}</component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Projects\email-sla-reporting\src\main\resources" />
@@ -255,11 +259,41 @@
       <workItem from="1791254200837" duration="13804000" />
       <workItem from="1791339254203" duration="17124000" />
       <workItem from="1791427948853" duration="15654000" />
+      <workItem from="1791780985754" duration="3901000" />
+      <workItem from="1791787344734" duration="2188000" />
+      <workItem from="1791857907165" duration="4742000" />
+      <workItem from="1791883832451" duration="409000" />
+      <workItem from="1791946308766" duration="5119000" />
+      <workItem from="1791957844918" duration="10204000" />
+      <workItem from="1791987739112" duration="14093000" />
+      <workItem from="1792029695573" duration="20343000" />
+      <workItem from="1792208679666" duration="3766000" />
+      <workItem from="1792378548398" duration="18349000" />
+      <workItem from="1792815684571" duration="80000" />
+      <workItem from="1792898887083" duration="2748000" />
+      <workItem from="1792904715237" duration="168000" />
     </task>
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
     <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State>
+              <option name="CUSTOM_BOOLEAN_PROPERTIES">
+                <map>
+                  <entry key="Show.Git.Branches" value="false" />
+                </map>
+              </option>
+            </State>
+          </value>
+        </entry>
+      </map>
+    </option>
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -316,23 +350,13 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/controller/EmailMetadataController.java</url>
-          <line>31</line>
+          <line>33</line>
           <option name="timeStamp" value="45" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>203</line>
+          <line>233</line>
           <option name="timeStamp" value="91" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>160</line>
-          <option name="timeStamp" value="92" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>167</line>
-          <option name="timeStamp" value="93" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/controller/EmailReportingSetupController.java</url>
@@ -361,37 +385,27 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>47</line>
-          <option name="timeStamp" value="104" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>58</line>
-          <option name="timeStamp" value="105" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>104</line>
+          <line>109</line>
           <option name="timeStamp" value="106" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>59</line>
+          <line>60</line>
           <option name="timeStamp" value="107" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>146</line>
+          <line>155</line>
           <option name="timeStamp" value="108" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>151</line>
+          <line>160</line>
           <option name="timeStamp" value="109" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
-          <line>154</line>
+          <line>163</line>
           <option name="timeStamp" value="110" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -425,21 +439,6 @@
           <option name="timeStamp" value="116" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
-          <line>33</line>
-          <option name="timeStamp" value="117" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="118" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
-          <line>44</line>
-          <option name="timeStamp" value="119" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailReportingSetupService.java</url>
           <line>74</line>
           <option name="timeStamp" value="122" />
@@ -449,10 +448,41 @@
           <line>146</line>
           <option name="timeStamp" value="123" />
         </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>171</line>
+          <option name="timeStamp" value="124" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>183</line>
+          <option name="timeStamp" value="126" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>203</line>
+          <option name="timeStamp" value="127" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/MetadataDBOperationService.java</url>
+          <line>205</line>
+          <option name="timeStamp" value="128" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
+          <line>165</line>
+          <option name="timeStamp" value="130" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/app/service/EmailMetadataService.java</url>
+          <line>181</line>
+          <option name="timeStamp" value="132" />
+        </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
     <pin-to-top-manager>
       <pinned-members>
+        <PinnedItemInfo parentTag="com.google.api.client.util.DataMap$Entry" memberName="value" />
         <PinnedItemInfo parentTag="org.apache.poi.xssf.usermodel.XSSFRow" memberName="_cells" />
       </pinned-members>
     </pin-to-top-manager>
@@ -460,6 +490,11 @@
       <configuration name="SpringBootApplicationConfigurationType">
         <watch expression="thread" />
         <watch expression="((LinkedHashMap)result).entrySet().toArray()[2]" custom="java.util.LinkedHashMap" />
+        <watch expression="((com.google.api.client.util.DataMap.Entry)thread.entrySet().toArray()[2]).getValue()" custom="com.google.api.client.util.DataMap.Entry" />
+        <watch expression="((com.google.api.client.util.DataMap.Entry)thread.entrySet().toArray()[2]).getValue()" language="JAVA" custom="com.google.api.client.util.DataMap.Entry" />
+        <watch expression="((com.google.api.services.gmail.model.Message)((ArrayList)((com.google.api.client.util.DataMap.Entry)thread.entrySet().toArray()[2]).getValue()).get(0)).entrySet().toArray()[4]" custom="com.google.api.client.util.DataMap.Entry,com.google.api.services.gmail.model.Message,java.util.ArrayList" />
+        <watch expression="((com.google.api.client.util.DataMap.Entry)thread.entrySet().toArray()[2]).getValue()" custom="com.google.api.client.util.DataMap.Entry" />
+        <watch expression="((com.google.api.services.gmail.model.Message)((ArrayList)((com.google.api.client.util.DataMap.Entry)thread.entrySet().toArray()[2]).getValue()).get(0)).entrySet().toArray()[4]" custom="com.google.api.client.util.DataMap.Entry,com.google.api.services.gmail.model.Message,java.util.ArrayList" />
       </configuration>
     </watches-manager>
   </component>

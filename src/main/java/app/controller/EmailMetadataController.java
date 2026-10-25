@@ -1,4 +1,5 @@
 /*
+
 package app.controller;
 
 import app.dto.ApiDTO;
@@ -21,7 +22,8 @@ public class EmailMetadataController {
     private final EmailMetadataService fetchService;
     private final MetadataDBOperationService dbOperationService;
 
-    @GetMapping("/list")
+*/
+/*    @GetMapping("/list")
     @Operation(description = "fetch mail metadata list")
     public ResponseEntity<ApiDTO> threadList(
             @RequestParam(required = false) String employeeOrMailBox,
@@ -42,8 +44,32 @@ public class EmailMetadataController {
     ) {
         ApiDTO response = dbOperationService.updateCountability(bulkIds,isCountable);
         return ResponseEntity.ok(response);
-      }
+      }*//*
+
+
+*/
+/*
+    @GetMapping("/run-fetch-job")
+    @Operation(description = "update countability")
+    public ResponseEntity<ApiDTO> fetch(
+    ) {
+        dbOperationService.fetchEmailMetadataAndPersistToDB(2);
+        return ResponseEntity.ok(ApiDTO.builder().message("ok").build());
+    }
+
+    @GetMapping("/run-sync-job")
+    @Operation(description = "update countability")
+    public ResponseEntity<ApiDTO> sync(
+    ) {
+        dbOperationService.fetchEmailReplyInfoAndSyncToDB();
+        return ResponseEntity.ok(ApiDTO.builder().message("ok").build());
+    }
+*//*
+
+
+
 
 
 }
+
 */

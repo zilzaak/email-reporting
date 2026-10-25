@@ -11,10 +11,9 @@ public class NotRepliedReciversDTO {
     private String receiverEmail;
     private String senderEmail;
 
-    public NotRepliedReciversDTO(Long id, String rootThreadId, String receiverEmail, String senderEmail) {
+    public NotRepliedReciversDTO(Long id, String rootThreadId, String senderEmail) {
         this.id = id;
         this.rootThreadId = rootThreadId;
-        this.receiverEmail = receiverEmail;
         this.senderEmail = senderEmail;
     }
 }

@@ -15,19 +15,18 @@ import java.util.Map;
 
 @Repository
 public interface EmailMetadataRepository extends JpaRepository<EmailMetadata,Long> {
-    @Query("select new app.dto.metadata.NotRepliedReciversDTO(em.id  ," +
+    @Query("select new app.dto.metadata.NotRepliedReciversDTO(es.id  ," +
             "es.rootThreadId," +
-            "em.receiverEmail, " +
             "es.senderEmail )" +
             " from EmailSubject  es " +
             " inner join EmailMetadata  em on em.emailSubject.id=es.id" +
-            " where em.status=false  " +
-            " and em.isCountable=true " +
+            " where COALESCE(em.status,false)=false  " +
+            " and coalesce(em.isCountable,true)=true " +
             " and ( :fromDate is null or cast(es.deliveredDate as date) >=  cast(:fromDate as date) ) " +
             " and ( :toDate is null or cast(es.deliveredDate as date) <=  cast(:toDate as date) )  " +
             " and em.receiverEmail not in (" +
-            " select email from EmailReportingSetup  where setupType=:setupType)" +
-            " order by es.deliveredDate asc ")
+            " select email from EmailReportingSetup  where setupType=:setupType) " +
+            " group by es.id,es.rootThreadId,es.senderEmail order by es.id desc")
     List<NotRepliedReciversDTO> unrepliedThreadList(@Param("fromDate") LocalDate fromDate ,
                                                     @Param("toDate") LocalDate toDate,
                                                     @Param("setupType") ReportingSetupType setupType);

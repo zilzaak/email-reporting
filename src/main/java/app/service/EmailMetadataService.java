@@ -4,7 +4,9 @@ import app.config.GmailFactory;
 import app.dto.ApiDTO;
 import app.dto.metadata.EmailMetadataDTO;
 import app.dto.metadata.MetadataSearchResultProjection;
+import app.entity.EmailSubject;
 import app.repository.EmailMetadataRepository;
+import app.repository.EmailSubjectRepository;
 import app.util.CommonService;
 import com.google.api.services.gmail.Gmail;
 import com.google.api.services.gmail.model.ListThreadsResponse;
@@ -28,6 +30,7 @@ import java.util.regex.Matcher;
 public class EmailMetadataService {
     private final GmailFactory gmailFactory;
     private final EmailMetadataRepository emailMetadataRepository;
+    private final EmailSubjectRepository emailSubjectRepository;
     private final CommonService commonService;
 
     public List<EmailMetadataDTO> fetchMetadataByMailboxAndDate(String mailbox, LocalDate targetDate){
@@ -76,38 +79,61 @@ public class EmailMetadataService {
         Message rootMessage = messages.get(0);
         Long rootEpochMillis = rootMessage.getInternalDate();
         LocalDateTime rootDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(rootEpochMillis), zoneId);
-        String rawFrom = getHeader(rootMessage, "From");
-        String senderEmail = extractFirstEmail(rawFrom);
-        if (senderEmail == null || senderEmail.isBlank()) {
+        String senderEmail = extractFirstEmail(getHeader(rootMessage, "From"));
+        String rootReferenceId = getHeader(rootMessage, "Message-ID");
+        String repliedToMessageId = getHeader(rootMessage, "In-Reply-To");
+        List<String> receiverEmails = extractAllEmails(getHeader(rootMessage, "To"));
+        List<String> ccEmails = extractAllEmails(getHeader(rootMessage, "Cc"));
+        if(!senderEmail.equals(mailbox) || receiverEmails.contains(mailbox) || repliedToMessageId!=null){
             return null;
         }
-        List<String> receiverEmails = extractAllEmails(getHeader(rootMessage, "To"));
         if(receiverEmails.size()<1){
             return null;
         }
-        List<String> ccEmails = extractAllEmails(getHeader(rootMessage, "Cc"));
+
         String deliveredDateStr = rootDateTime.format(commonService.DATE_TIME_FORMATTER);
         String subject = getHeader(rootMessage, "Subject");
-        String rootMessageId = rootMessage.getId();
         String rootThreadId = thread.getId();
 
         String[] replyThreadIds   = new String[receiverEmails.size()];
         String[] replyMessageIds  = new String[receiverEmails.size()];
         String[] replyDates       = new String[receiverEmails.size()];
         String[] replyDelayHours  = new String[receiverEmails.size()];
+        String[] replierEmail     = receiverEmails.toArray(new String[0]);
+
+
+        LocalDateTime firstRepliedTime = null;
+        int firstReplyIndex=0;
 
         if (messages.size() > 1) {
             for (int i = 1; i < messages.size(); i++) {
                 Message replyMsg = messages.get(i);
+                String replyReferenceId = getHeader(replyMsg, "References");
+                //String replyMessageId = getHeader(replyMsg, "Message-ID");
                 Long replyEpochMillis = replyMsg.getInternalDate();
                 String replyFrom = extractFirstEmail(getHeader(replyMsg, "From"));
                 int receiverIndex=receiverEmails.indexOf(replyFrom);
                 if (receiverIndex<0) {
                     continue;
                 }
+/*                if(rootReferenceId==null || !rootReferenceId.equals(replyReferenceId)){ commented strict rule, reply to any one is granted as reply
+                    continue;
+                }*/
+                if(replyReferenceId==null){
+                    continue;
+                }
+
                 if (replyEpochMillis != null) {
                     LocalDateTime replyDateTime = LocalDateTime.ofInstant(Instant.ofEpochMilli(replyEpochMillis), zoneId);
-                    long diffMillis = Math.max(0L, replyEpochMillis - rootEpochMillis); double delayHours = diffMillis / (1000.0 * 60.0 * 60.0);
+                    if(firstRepliedTime!=null && firstRepliedTime.isBefore(replyDateTime)){
+                        replyDateTime= firstRepliedTime;
+                    }else{
+                        firstRepliedTime=replyDateTime;
+                        firstReplyIndex=receiverIndex;
+                    }
+
+                    long diffMillis = Math.max(0L, replyEpochMillis - rootEpochMillis);
+                    double delayHours = diffMillis / (1000.0 * 60.0 * 60.0);
                     if(replyDelayHours[receiverIndex]!=null && Double.parseDouble(replyDelayHours[receiverIndex])>delayHours){
                         replyDelayHours[receiverIndex]=String.format(Locale.US, "%.2f", delayHours);
                         replyDates[receiverIndex]=replyDateTime.format(commonService.DATE_TIME_FORMATTER);
@@ -124,6 +150,19 @@ public class EmailMetadataService {
             }
         }
 
+        Boolean anyOneReplied = null;
+        if(firstRepliedTime==null){
+            if(LocalDateTime.now().isAfter(rootDateTime.plusHours(24))){
+                anyOneReplied=false;
+            }
+        }else{
+            if(LocalDateTime.now().isAfter(rootDateTime.plusHours(24))){
+                anyOneReplied=false;
+            }else{
+                anyOneReplied=true;
+            }
+        }
+
         return EmailMetadataDTO.builder()
                 .subject(subject)
                 .mailbox(mailbox)
@@ -131,12 +170,15 @@ public class EmailMetadataService {
                 .receiverEmails(receiverEmails)
                 .ccEmails((ccEmails!=null && ccEmails.size()>0)?String.join(",",ccEmails):null)
                 .deliveredDate(deliveredDateStr)
+                .anyOneReplied(anyOneReplied)
+                .firstReplyingEmail(replierEmail[firstReplyIndex])
                 .replyDate(replyDates)
                 .replyDelayHour(replyDelayHours)
                 .rootThreadId(rootThreadId)
-                .rootMessageId(rootMessageId)
+                .rootMessageId(rootMessage.getId())
                 .replyThreadId(replyThreadIds)
                 .replyMessageId(replyMessageIds)
+                .replierEmail(replierEmail)
                 .build();
     }
 

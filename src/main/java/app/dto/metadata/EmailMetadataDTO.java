@@ -20,6 +20,8 @@ public class EmailMetadataDTO {
     private String ccEmails;
     @Builder.Default
     private String[] replyDate=null;
+    Boolean anyOneReplied;
+    String firstReplyingEmail;
     @Builder.Default
     private String[] replyDelayHour=null;
     private String rootThreadId;
@@ -28,6 +30,7 @@ public class EmailMetadataDTO {
     private String[] replyThreadId=null;
     @Builder.Default
     private String[] replyMessageId=null;
+    private String[] replierEmail=null;
     private String subject;
     private String mailbox;
 }

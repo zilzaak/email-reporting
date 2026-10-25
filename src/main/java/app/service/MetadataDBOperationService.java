@@ -21,6 +21,7 @@ import org.springframework.stereotype.Service;
 import java.sql.Types;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -39,7 +40,7 @@ public class MetadataDBOperationService {
 
 
 
-    public void fetchEmailMetadataAndPersistToDB() {
+    public void fetchEmailMetadataAndPersistToDB(Integer backDate) {
         LocalDate targetDate = LocalDate.now().minusDays(1);
         //LocalDate targetDate = LocalDate.parse("2026-09-02");
         log.info("Cron job triggered: persisting email metadata for target date: {}", targetDate);
@@ -62,10 +63,12 @@ public class MetadataDBOperationService {
                             metadataDTO.getSubject(),
                             mailbox.getEmployeeId(),
                             trimmedMailbox,
-                            null,
+                            metadataDTO.getCcEmails(),
                             metadataDTO.getRootThreadId(),
                             metadataDTO.getRootMessageId(),
                             metadataDTO.getDeliveredDate(),
+                            metadataDTO.getAnyOneReplied(),
+                            metadataDTO.getFirstReplyingEmail(),
                             bulkEmailTo,
                             bulkReplyDate,
                             bulkReplyDelayHour,
@@ -94,6 +97,8 @@ public class MetadataDBOperationService {
                            String rootThreadId,
                            String rootMessageId,
                            String deliveredDate,
+                           Boolean anyOneReplied,
+                           String firstReplyingEmail,
                            String receiverEmails,
                            String replyDates,
                            String replyDelayHours,
@@ -112,6 +117,8 @@ public class MetadataDBOperationService {
                             new SqlParameter("in_receiver_email",    Types.NVARCHAR),
                             new SqlParameter("in_cc_emails",         Types.NVARCHAR),
                             new SqlParameter("in_delivered_date",    Types.VARCHAR),
+                            new SqlParameter("in_any_one_replied",   Types.BIT),
+                            new SqlParameter("in_first_replier",     Types.VARCHAR),
                             new SqlParameter("in_reply_date",        Types.NVARCHAR),
                             new SqlParameter("in_reply_delay_hour",  Types.NVARCHAR),
                             new SqlParameter("in_root_thread_id",    Types.VARCHAR),
@@ -134,6 +141,8 @@ public class MetadataDBOperationService {
             params.put("in_receiver_email",    receiverEmails);
             params.put("in_cc_emails",         ccMails);
             params.put("in_delivered_date",    deliveredDate);
+            params.put("in_any_one_replied",   anyOneReplied);
+            params.put("in_first_replier",     firstReplyingEmail);
             params.put("in_reply_date",        replyDates);
             params.put("in_reply_delay_hour",  replyDelayHours);
             params.put("in_root_thread_id",    rootThreadId);
@@ -158,72 +167,79 @@ public class MetadataDBOperationService {
     }
 
     public void fetchEmailReplyInfoAndSyncToDB() {
-        LocalDate toDate = LocalDate.now();
+        LocalDate toDate = LocalDate.now().minusDays(1);
         LocalDate fromDate = toDate.minusDays(30);
         List<NotRepliedReciversDTO> notRepliedThreadList = emailMetadataRepository.unrepliedThreadList(null,toDate,ReportingSetupType.EXCLUDE_REPLY_COUNT);
-        String bulkIds=null;
+
         String bulkReplyThreadIds=null;
         String bulkReplyMessageIds=null;
         String bulkReplyDates=null;
         String bulkReplyDelayHours=null;
-
-        Map<String,EmailMetadataDTO> replyCache = new HashMap<>();
+        String bulkReplyEmails=null;
 
         for(NotRepliedReciversDTO notReplied : notRepliedThreadList ){
             Gmail gmail = gmailFactory.forGmailReadonly(notReplied.getSenderEmail());;
             EmailMetadataDTO dto=null;
             try{
-                if(replyCache.containsKey(notReplied.getRootThreadId())){
-                    dto =replyCache.get(notReplied.getRootThreadId());
-                }else{
-                    dto = emailMetadataFetchService.processThread(gmail, notReplied.getRootThreadId(),notReplied.getSenderEmail(),ZoneId.of("Asia/Dhaka"));
-                    replyCache.put(notReplied.getRootThreadId(),dto);
-                }
+                   dto = emailMetadataFetchService.processThread(gmail, notReplied.getRootThreadId(),notReplied.getSenderEmail(),ZoneId.of("Asia/Dhaka"));
+                   if(dto==null){
+                       continue;
+                   }
 
-                int recieverIndex = dto.getReceiverEmails().indexOf(notReplied.getReceiverEmail());
-
-                if(dto!=null && dto.getReplyDate()[recieverIndex]!=null && !dto.getReplyDate()[recieverIndex].isEmpty()){
-                    if(bulkIds==null){
-                        bulkIds=notReplied.getId().toString();
-                        bulkReplyThreadIds=dto.getReplyThreadId()[recieverIndex];
-                        bulkReplyMessageIds=dto.getReplyMessageId()[recieverIndex];
-                        bulkReplyDates=dto.getReplyDate()[recieverIndex];
-                        bulkReplyDelayHours=dto.getReplyDelayHour()[recieverIndex];
-                    }else{
-                        bulkIds=bulkIds+","+notReplied.getId();
-                        bulkReplyThreadIds=bulkReplyThreadIds+","+dto.getReplyThreadId()[recieverIndex];
-                        bulkReplyMessageIds=bulkReplyMessageIds+","+dto.getReplyMessageId()[recieverIndex];
-                        bulkReplyDates=bulkReplyDates+","+dto.getReplyDate()[recieverIndex];
-                        bulkReplyDelayHours=bulkReplyDelayHours+","+dto.getReplyDelayHour()[recieverIndex];
+                    for(int i=0;i<dto.getReplyThreadId().length;i++){
+                        if(bulkReplyThreadIds==null){
+                            bulkReplyThreadIds=dto.getReplyThreadId()[i];
+                            bulkReplyMessageIds=dto.getReplyMessageId()[i];
+                            bulkReplyDates=dto.getReplyDate()[i];
+                            bulkReplyDelayHours=dto.getReplyDelayHour()[i];
+                            bulkReplyEmails=dto.getReplierEmail()[i];
+                        }else{
+                            bulkReplyThreadIds=bulkReplyThreadIds+","+dto.getReplyThreadId()[i];
+                            bulkReplyMessageIds=bulkReplyMessageIds+","+dto.getReplyMessageId()[i];
+                            bulkReplyDates=bulkReplyDates+","+dto.getReplyDate()[i];
+                            bulkReplyDelayHours=bulkReplyDelayHours+","+dto.getReplyDelayHour()[i];
+                            bulkReplyEmails=bulkReplyEmails+","+dto.getReplierEmail()[i];
+                        }
                     }
-                }
+                    if(bulkReplyThreadIds!=null){
+                        try{
+                           ApiDTO response = this.saveToDB(
+                                    notReplied.getId().toString(),
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    null,
+                                    dto.getDeliveredDate(),
+                                    dto.getAnyOneReplied(),
+                                    dto.getFirstReplyingEmail(),
+                                    bulkReplyEmails,
+                                    bulkReplyDates,
+                                    bulkReplyDelayHours,
+                                    bulkReplyThreadIds,
+                                    bulkReplyMessageIds,
+                                    null,
+                                    "U");
+                            System.out.println("save result"+response.getMessage());
+                        }catch (Exception e){
+                            System.out.println(e.getMessage());
+                        }
+
+                    }
 
             } catch (Exception e) {
 
             }
         }
 
-        if(bulkIds!=null){
-            this.saveToDB(bulkIds,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    null,
-                    bulkReplyDates,
-                    bulkReplyDelayHours,
-                    bulkReplyThreadIds,
-                    bulkReplyMessageIds,
-                    null,
-                    "U");
-        }
+
     }
 
     public ApiDTO updateCountability(String bulkIds, Boolean isCountable) {
         return this.saveToDB(bulkIds
+                ,null
+                ,null
                 ,null
                 ,null
                 ,null
